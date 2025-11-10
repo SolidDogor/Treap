@@ -54,6 +54,29 @@ void recorridoEnOrden(NodoTreap* raiz) {
     }
 }
 
+// Insertar una clave en el Treap
+NodoTreap* insertar(NodoTreap* raiz, int clave) {
+    if (!raiz)
+        return nuevoNodo(clave);
+
+    if (clave == raiz->clave) {
+        cout << "La clave " << clave << " ya existe en el Treap.\n";
+        return raiz;
+    }
+
+    if (clave < raiz->clave) {
+        raiz->izquierda = insertar(raiz->izquierda, clave);
+        if (raiz->izquierda->prioridad > raiz->prioridad)
+            raiz = rotarDerecha(raiz);
+    } else {
+        raiz->derecha = insertar(raiz->derecha, clave);
+        if (raiz->derecha->prioridad > raiz->prioridad)
+            raiz = rotarIzquierda(raiz);
+    }
+
+    return raiz;
+}
+
 // Eliminar una clave del Treap
 NodoTreap* eliminar(NodoTreap* raiz, int clave) {
     if (raiz == NULL)
